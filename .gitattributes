@@ -1,0 +1,8 @@
+# -*- mode: gitattributes; -*-
+justfile      linguist-language=Make
+
+VERSION export-subst
+git-hash export-subst
+*.jq text eol=lf
+*.sh text eol=lf
+*.sol text eol=lf
