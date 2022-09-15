@@ -40,17 +40,18 @@ def oas_operations: # Defining a listoperations function
         path: $path, # Using the variable defined on line 4
         summary: .value.summary?,
         deprecated: .value.deprecated?,
-        original: .value, # Keeping original value, just in case 😉
-        source: input_filename # Adding source file, also just in case 😉
+        original: .value,
+        source: input_filename
       }
     )[] # Flattens array to avoid having an array 
         # of array of {path, method, summary, deprecated}
   ) # Now we have an array of {path, method, summary, deprecated}
 ; # oas_operations function's end
 
-def oas_operations_to_text: # Defining a function that
-                            # Prints operations as raw text
-  map( # Applies a transformation to each element
+# Defining a function that prints operations as raw text
+def oas_operations_to_text: 
+# Applies a transformation to each element
+  map( 
     .method + "\t" + 
     .path + "\t" + 
     .summary + 
