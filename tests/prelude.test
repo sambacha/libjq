@@ -1,0 +1,205 @@
+#########################################################################
+# Prelude
+#
+# Tests are groups of three lines: program, input, expected output.
+# Blank lines and lines starting with # are ignored.
+#########################################################################
+
+#include "prelude"; reduce .[] as $n (0; .+$n) == fold(.[0]+.[1]; 0; .[])
+#[1,2,3,4]
+#true
+
+isempty(empty)
+null
+true
+
+isempty(range(.))
+0
+true
+
+isempty(.)
+true
+false
+
+isempty(.)
+false
+false
+
+isempty(.)
+null
+false
+
+isempty(range(.))
+8
+false
+
+isempty(.[])
+[1,2,3]
+false
+
+isempty(.)
+0
+false
+
+isempty(infinite)
+null
+false
+
+isempty(nan)
+null
+false
+
+include "prelude"; every(empty)
+null
+true
+
+include "prelude"; some(empty)
+null
+false
+
+########################################################################
+# operators
+########################################################################
+
+# . | A  ≡  A
+(. | .+2) == .+2
+7
+true
+
+# A | .  ≡  A
+(.+2 | .) == .+2
+7
+true
+
+# empty | A  ≡  empty  
+(empty | .+2)//null == null
+7
+true
+
+# A | empty  ≡  empty
+(.+2 | empty)//null == null
+7
+true
+
+# empty , A  ≡  A
+(empty , 5) == 5
+null
+true
+
+# A , empty  ≡  A
+(5 , empty) == 5
+null
+true
+
+# A , (B , C)  ≡  (A , B) , C
+[2 , (3 , 5)] == [(2 , 3) , 5]
+null
+true
+
+# A | (B | C)  ≡  (A | B) | C
+[.*2 | (.*3 | .*5)] == [(.*2 | .*3) | .*5]
+7
+true
+
+# (A , B) | C  ≡  (A | C) , (B | C)
+[(2 , 3) | .*5 ] == [(2 | .*5), (3 | .*5) ]
+null
+true
+
+# NOT ALWAYS???
+# A | (B , C) = (A | B) , (A | C)
+[2 | (.*3 , .*5)] == [(2 | .*3) , (2 | .*5)]
+null
+true
+
+########################################################################
+
+[3 , 5 | .*2] == [(3 , 5) | .*2]
+null
+true
+
+[5 | .*2 , .*3] == [5 | (.*2 , .*3)]
+null
+true
+
+[5 | .*2 , .*3] == [(5 | .*2) , (5 | .*3)]
+null
+true
+
+[3 , 5 | .*2] == [(3 | .*2) , (5 | .*2)]
+null
+true
+
+########################################################################
+
+[limit(7;range(77))] == [while(.<7;.+1)]
+0
+true
+
+[limit(7;range(77))] == [recurse(.+1;.<7)]
+0
+true
+
+[while(.<7;.+1)] == [recurse(.+1;.<7)]
+0
+true
+
+include "prelude"; [recurse(.+1;.<7)] == [label $x | recurse(.+1) | if .<7 then . else break $x end]
+0
+true
+
+########################################################################
+
+include "prelude"; [0|limit(10;recurse(.+1))] == [limit(10;iterate(0;.+1))]
+0
+true
+
+include "prelude"; [limit(10;recurse(.+1))]   == [limit(10;iterate(0;.+1))]
+0
+true
+
+include "prelude"; [0|limit(10;recurse(.+1))] == [limit(10;iterate(0;.+1))]
+0
+true
+
+include "prelude"; [limit(10;recurse(.+1))]   == [limit(10;iterate(0;.+1))]
+0
+true
+
+include "prelude"; [limit(11;1|iterate(.+2,.*2))]
+null
+[1,3,2,5,6,4,4,7,10,8,12]
+
+include "prelude"; [limit(11;1|recurse(.+2,.*2))]
+null
+[1,3,5,7,9,11,13,15,17,19,21]
+
+include "prelude"; [limit(6; seq|pow(.;2))]
+null
+[0,1,4,9,16,25]
+
+include "prelude"; [range(0;10;2)]
+null
+[0,2,4,6,8]
+
+include "prelude"; [range(10;0;-2)]
+null
+[10,8,6,4,2]
+
+include "prelude"; mapstr(select(.!="g"))
+"agogico"
+"aoico"
+
+include "prelude"; [0|while(.<10;.+1)] == [0|recurse(.+1;select(.<10))]
+null
+true
+
+#include "prelude"; [0|while(.<10;.+1)] == [0|try(recurse(.+1)|guard(.<10))]
+#null
+#true
+
+#include "prelude"; [0|until(.>10;.+1)] == [0|try(recurse(.+1) | select(.>10) | fence)]
+#null
+#true
+
+# vim:ai:sw=2:ts=2:et:syntax=jq

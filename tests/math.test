@@ -1,0 +1,156 @@
+#########################################################################
+# Math utilities
+#
+# Tests are groups of three lines: program, input, expected output.
+# Blank lines and lines starting with # are ignored.
+#########################################################################
+
+include "math"; even(.)
+2
+true
+
+include "math"; odd(.)
+2
+false
+
+include "math"; even(.)
+3
+false
+
+include "math"; odd(.)
+3
+true
+
+include "math"; tobase(16)
+32
+"20"
+
+include "math"; tobase(2)
+128
+"10000000"
+
+include "math"; tobase(16)
+255
+"FF"
+
+include "math"; sign(nan) | isnan
+null
+true
+
+include "math"; sign(.)
+-3
+-1
+
+include "math"; sign(.)
+3
+1
+
+include "math"; sign(.)
+0
+0
+
+include "math"; gcd(.[0];.[1])
+[24,60]
+12
+
+include "math"; gcd(0;0)
+null
+0
+
+include "math"; gcd(-12;6)
+null
+6
+
+include "math"; fabs
+-3
+3
+
+include "math"; fabs
+-3.3
+3.3
+
+include "math"; mod(12;6)
+null
+0
+
+include "math"; mod(12;5)
+null
+2
+
+include "math"; mod(12;11)
+null
+1
+
+include "math"; div(7;2)
+null
+3
+
+# reductions ###########################################################
+
+include "math"; sum(range(.)) == 0
+0
+true
+
+include "math"; [range(.)]|add == sum(range(10))
+10
+true
+
+include "math"; mul(range(.)) == 1
+0
+true
+
+include "math"; mul(range(.m;.n)) == (2*3*4*5*6*7*8*9)
+{"m":2,"n":10}
+true
+
+include "math"; min(empty) == infinite
+null
+true
+
+include "math"; max(empty) == 0-infinite
+null
+true
+
+include "math"; max(range(.m;.n)) == 9
+{"m":2,"n":10}
+true
+
+include "math"; max(-1,-2,-3) == -1
+null
+true
+
+include "math"; max(0-infinite, 9) == 9
+null
+true
+
+include "math"; count(empty) == 0
+null
+true
+
+include "math"; count(range(3)) == 3
+null
+true
+
+include "math"; count(empty) == 0
+null
+true
+
+include "math"; count(range(3;10)) == 9-3+1
+null
+true
+
+include "math"; count(range(8), range(4;11)) == count(range(8)) + count(range(4;11))
+null
+true
+
+# reverse implemented using reduce
+def rev: reduce .[] as $x ([]; [$x] + .); (.|rev) == (.|reverse)
+[1,2,3,4,5]
+true
+
+# length implemented using reduce
+def len: reduce .[] as $x (0; . + 1); (.|len) == (.|length)
+[1,2,3,4,5]
+true
+
+# vim:ai:sw=2:ts=2:et:syntax=jq

@@ -1,0 +1,189 @@
+#########################################################################
+# Combinatorics on Words
+#
+# Tests are groups of three lines: program, input, expected output.
+# Blank lines and lines starting with # are ignored.
+#########################################################################
+
+include "word"; rotate(1)
+[1,2,3,4,5]
+[2,3,4,5,1]
+
+include "word"; rotate(-1)
+[1,2,3,4,5]
+[5,1,2,3,4]
+
+include "word"; rotate(2)
+"kaleidoscope"
+"leidoscopeka"
+
+include "word"; rotate(-2)
+"kaleidoscope"
+"pekaleidosco"
+
+# Catenation
+. + [1,2,3]
+[3,4,5]
+[3,4,5,1,2,3]
+
+# Length of w
+length
+[3,4,5]
+3
+
+# Number of a's in w
+indices(["a"]) | length
+[1,"a",3,4,"a",5]
+2
+
+indices("a") | length
+"1a34a5"
+2
+
+include "word"; count("as")
+"kjhkjhasiouoiuasuyt"
+2
+
+include "word"; count("a")
+[1,"a",3,4,"a",5]
+2
+
+include "word"; count("x")
+[1,"a",3,4,"a",5]
+0
+
+# Alphabet of w
+unique
+[1,5,2,3,4,2,5]
+[1,2,3,4,5]
+
+# Reverse
+reverse
+[1,2,3,4,5]
+[5,4,3,2,1]
+
+include "word"; mirror
+[1,2,3,4,5]
+[5,4,3,2,1]
+
+include "word"; mirror
+"aeiou"
+"uoiea"
+
+
+########################################################################
+
+include "word"; power(0)
+"abcd"
+""
+
+include "word"; power(1)
+"abcd"
+"abcd"
+
+include "word"; power(2)
+"abcd"
+"abcdabcd"
+
+include "word"; power(4)
+"abcd"
+"abcdabcdabcdabcd"
+
+include "word"; power(0)
+[2,3,4,2]
+[]
+
+include "word"; power(1)
+[2,3,4,2]
+[2,3,4,2]
+
+include "word"; power(2)
+[2,3,4,2]
+[2,3,4,2,2,3,4,2]
+
+include "word"; [[limit(13;star)][1:],[limit(12;plus)]] | .[0]==.[1]
+[1,2,3]
+true
+
+include "word"; [[limit(13;star)][1:],[limit(12;plus)]] | .[0]==.[1]
+"abc"
+true
+
+include "word"; power(0)
+"abcd"
+""
+
+include "word"; power(1)
+"abcd"
+"abcd"
+
+include "word"; power(2)
+"abcd"
+"abcdabcd"
+
+include "word"; power(4)
+"abcd"
+"abcdabcdabcdabcd"
+
+include "word"; power(0)
+[2,3,4,2]
+[]
+
+include "word"; power(1)
+[2,3,4,2]
+[2,3,4,2]
+
+include "word"; power(2)
+[2,3,4,2]
+[2,3,4,2,2,3,4,2]
+
+include "word"; [[limit(13;star)][1:],[limit(12;plus)]] | .[0]==.[1]
+[1,2,3]
+true
+
+include "word"; [[limit(13;star)][1:],[limit(12;plus)]] | .[0]==.[1]
+"abc"
+true
+
+include "word"; splice(5;5;"xyz")
+"aeiou"
+"aeiouxyz"
+
+include "word"; splice(0;0;"xyz")
+"aeiou"
+"xyzaeiou"
+
+include "word"; splice(1;1;"xyz")
+"aeiou"
+"axyzeiou"
+
+include "word"; splice(1;2;"xyz")
+"aeiou"
+"axyziou"
+
+include "word"; splice(1;2;null)
+"aeiou"
+"aiou"
+
+include "word"; gsub("a";"x")
+"mi mama me mima"
+"mi mxmx me mimx"
+
+include "word"; gsub("a";"")
+"mi mama me mima"
+"mi mm me mim"
+
+include "word"; gsub("";"ignored")
+"mi mama me mima"
+"mi mama me mima"
+
+include "word"; gsub("ignored";"ignored")
+""
+""
+
+include "word"; sub("a";"x")
+"mi mama me mima"
+"mi mxma me mima"
+
+
+# vim:ai:sw=2:ts=2:et:syntax=jq

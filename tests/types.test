@@ -1,0 +1,125 @@
+#########################################################################
+# Types
+#
+# Tests are groups of three lines: program, input, expected output.
+# Blank lines and lines starting with # are ignored.
+#########################################################################
+
+include "types"; tobool(1,2,3)
+null
+true
+
+include "types"; tobool(empty)
+null
+false
+
+include "types"; map(tobool)
+[null,false,true,0,"",[],{}]
+[false,false,true,true,true,true,true]
+
+include "types"; isscalar
+null
+true
+
+########################################################################
+# null tests
+########################################################################
+
+length
+null
+0
+
+. < -(infinite)
+null
+true
+
+.==null
+null
+true
+
+type=="null"
+null
+true
+
+.a=9
+null
+{"a":9}
+
+.[2]=9
+null
+[null,null,9]
+
+not|not
+null
+false
+
+.+33
+null
+33
+
+.+"la"
+null
+"la"
+
+.+[1,2,3]
+null
+[1,2,3]
+
+.+{a:1}
+null
+{"a":1}
+
+
+"any string" * 0
+null
+null
+
+nan | tojson
+null
+"null"
+
+fromjson | isinfinite
+"Inf"
+true
+
+fromjson | isnan
+"NaN"
+true
+
+fromjson | tojson
+"NaN"
+"null"
+
+null[7] == null
+null
+true
+
+null.kk == null
+null
+true
+
+null["kk"] == null
+null
+true
+
+add
+[]
+null
+
+add
+{}
+null
+
+null//7
+null
+7
+
+.[88]==null
+[]
+true
+
+path(null)
+null
+[]
+
+# vim:ai:sw=2:ts=2:et:syntax=jq

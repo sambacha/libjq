@@ -1,0 +1,108 @@
+#########################################################################
+# Language operations
+
+# Tests are groups of three lines: program, input, expected output.
+# Blank lines and lines starting with # are ignored.
+#########################################################################
+
+# fibstr
+include "word/language"; [limit(5; fibstr("a";"b"))]
+null
+["a","b","ab","bab","abbab"]
+
+# fibstr
+include "word/language"; [limit(5; fibstr("a";"b"))]
+null
+["a","b","ab","bab","abbab"]
+
+include "word/language"; power(0)
+[[1,2,3]]
+[]
+
+include "word/language"; power(0)
+["123"]
+""
+
+include "word/language"; power(1)
+["123"]
+"123"
+
+include "word/language"; power(1)
+["123","abc"]
+"123"
+"abc"
+
+include "word/language"; power(2)
+["123"]
+"123123"
+
+include "word/language"; power(2)
+["1","a"]
+"11"
+"1a"
+"a1"
+"aa"
+
+include "word/language"; power(1)
+[[1,2,3]]
+[1,2,3]
+
+include "word/language"; power(2)
+[[1,2]]
+[1,2,1,2]
+
+include "word/language"; power(2)
+[[1,2],[3,4]]
+[1,2,1,2]
+[1,2,3,4]
+[3,4,1,2]
+[3,4,3,4]
+
+include "word/language"; power(2)
+["12","34"]
+"1212"
+"1234"
+"3412"
+"3434"
+
+include "word/language"; limit(1;star)
+["123"]
+""
+
+include "word/language"; limit(1;star)
+[[1,2,3]]
+[]
+
+include "word/language"; limit(5;star)
+["a","b"]
+""
+"a"
+"b"
+"aa"
+"ab"
+
+include "word/language"; limit(5;plus)
+["a","b"]
+"a"
+"b"
+"aa"
+"ab"
+"ba"
+
+include "word/language"; limit(5;star)
+[[1],[2]]
+[]
+[1]
+[2]
+[1,1]
+[1,2]
+
+include "word/language"; limit(5;plus)
+[[1],[2]]
+[1]
+[2]
+[1,1]
+[1,2]
+[2,1]
+
+# vim:ai:sw=2:ts=2:et:syntax=jq

@@ -1,0 +1,125 @@
+#########################################################################
+# Text functions
+#
+# Classic string functions are easy to implement. Also functions
+# inspired in the Icon Language.
+#
+# Tests are groups of three lines: program, input, expected output.
+# Blank lines and lines starting with # are ignored.
+#########################################################################
+
+include "string"; remove("aeiou")
+"loquenomesabiayo"
+"lqnmsby"
+
+#
+# Icon style
+#
+include "string"; center(8)
+"AEI"
+"  AEI   "
+
+include "string"; center(8)
+"AE"
+"   AE   "
+
+include "string"; center(9)
+"AEI"
+"   AEI   "
+
+include "string"; center(9)
+"AE"
+"   AE    "
+
+include "string"; left(10)
+"AEIOU"
+"     AEIOU"
+
+include "string"; right(10)
+"AEIOU"
+"AEIOU     "
+
+# trim
+include "string"; ltrim
+""
+""
+
+include "string"; rtrim
+""
+""
+
+include "string"; ltrim
+"        "
+""
+
+include "string"; rtrim
+"         "
+""
+
+include "string"; ltrim
+"aaaaa"
+"aaaaa"
+
+include "string"; rtrim
+"aaaaa"
+"aaaaa"
+
+include "string"; ltrim
+"      aaaaa"
+"aaaaa"
+
+include "string"; rtrim
+"aaaaa        "
+"aaaaa"
+
+include "string"; trim
+"      aaaaa        "
+"aaaaa"
+
+include "string"; trim
+"a b c"
+"a b c"
+
+include "string"; ltrim
+" a b c"
+"a b c"
+
+include "string"; rtrim
+"a b c "
+"a b c"
+
+include "string"; trim
+" a b c "
+"a b c"
+
+#
+# char, ord
+#
+
+include "string"; ord("A")
+null
+65
+
+include "string"; char(65) == "A"
+null
+true
+
+include "string"; ord(char(65)) == 65 and char(ord("A")) == "A"
+null
+true
+
+include "string"; [ord("€"), char(8364)]
+null
+[8364, "€"]
+
+#
+
+include "string"; join
+["a","b"]
+"ab"
+
+include "string"; join(";")
+["a","b"]
+"a;b"
+
+# vim:ai:sw=2:ts=2:et:syntax=jq

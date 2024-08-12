@@ -1,0 +1,192 @@
+#########################################################################
+# Generators
+#
+# Tests are groups of three lines: program, input, expected output.
+# Blank lines and lines starting with # are ignored.
+#########################################################################
+
+include "stream"; [take(range(1000); .<7)]
+null
+[0,1,2,3,4,5,6]
+
+include "stream"; singleton(range(10))
+null
+false
+
+include "stream"; singleton(empty)
+null
+false
+
+include "stream"; singleton(range(1))
+null
+true
+
+include "stream"; member(range(10))
+6
+true
+
+IN(range(10))
+66
+false
+
+include "stream"; member(range(10))
+6
+true
+
+IN(range(10))
+66
+false
+
+include "stream"; member(6; range(10))
+null
+true
+
+include "stream"; member(66; range(10))
+null
+false
+
+include "stream"; sharing((33,7,44); range(10))
+null
+true
+
+IN((33,7,44); range(10))
+null
+true
+
+[empty, range(8)] == [range(8), empty]
+null
+true
+
+[empty, range(8), empty] == [range(8)]
+null
+true
+
+[(range(2), range(3)), range(4)] == [range(2), (range(3), range(4))]
+null
+true
+
+isempty(empty)
+null
+true
+
+#
+# all, any
+#
+include "stream"; []|all
+null
+true
+
+include "stream"; [true]|all
+null
+true
+
+include "stream"; [true,false]|all
+null
+false
+
+include "stream"; [range(10)]|all(.<10)
+null
+true
+
+include "stream"; []|any
+null
+false
+
+include "stream"; [true]|any
+null
+true
+
+include "stream"; [1,2,3]|any(.>2)
+null
+true
+
+include "stream"; [1,2,3]|any(.>3)
+null
+false
+
+#
+# first, drop, nth
+#
+
+first([][])
+null
+# empty
+
+first(range(5;100))
+null
+5
+
+include "stream"; nth(0; range(5;100))
+null
+5
+
+include "stream"; [limit(4;range(10))] == [0,1,2,3]
+null
+true
+
+include "stream"; drop(5; range(8))
+null
+5
+6
+7
+
+include "stream"; drop(1000; range(1002))
+null
+1000
+1001
+
+include "stream"; drop(10; range(1))
+null
+# empty
+
+include "stream"; drop(10; range(10))
+null
+# empty
+
+
+include "stream"; [slice(10; 13; range(1002))]
+null
+[10,11,12]
+
+#
+# repeat
+#
+
+[limit(6; repeat(range(3)))]
+null
+[0,1,2,0,1,2]
+
+[limit(6; repeat(range(3)))]
+null
+[0,1,2,0,1,2]
+
+[limit(6; repeat([0,1,2][]))]
+null
+[0,1,2,0,1,2]
+
+[limit(4; repeat(8))]
+null
+[8,8,8,8]
+
+#
+# enum
+#
+
+include "stream"; enum(split("")[])
+"ae"
+[0,"a"]
+[1,"e"]
+
+include "stream"; last(enum(split("")[]))
+"aeiou"
+[4,"u"]
+
+include "stream";  nth(11; enum(split("")[]))
+"abcdefghijklmnopqrstuvwxyz"
+[11,"l"]
+
+include "stream";  [distinct(1,2,1,1,2,3,2,1,2,2,3,2,1)]
+null
+[1,2,3]
+
+# vim:ai:sw=2:ts=2:et:syntax=jq
